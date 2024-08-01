@@ -222,7 +222,7 @@ static void print_tictactoe_game(char game[MAX_DIMENSIONS][MAX_DIMENSIONS]){
 }
 
 /**
- * @brief: This function launchs a tic tac toe game and plays by prompting the user for a row and column index to put their      desrised character
+ * @brief: This function launchs a tic tac toe game and plays by prompting the user for a row and column index to put their in desrised character
  * 
  * @param: none
  */
@@ -236,12 +236,13 @@ tictactoe_t is_game_solved(void){
    // Initialises the game handler.
    tictactoe_t gameHandler = {
       .isGameSolved = false,
-      .quitGame = false,
       .gameTurnsCount = 0U,
       .errCode = (uint8_t)false,
       .Xsolved = false, 
       .Osolved = false
    };
+
+   // Copys the game board onto the gameHandler
    size_t len = sizeof(char) * MAX_DIMENSIONS * MAX_DIMENSIONS;
    memcpy(gameHandler.gamePositions, game, len);
 
@@ -262,6 +263,7 @@ tictactoe_t is_game_solved(void){
       rowIndex = get_row_index();
       // Gets the column index
       colIndex = get_column_index();
+      // Determines whether the desired cell is empty or not
       while(gameHandler.gamePositions[rowIndex][colIndex] != ' '){
          puts("Error: Cell already contains a character");
          // Gets the row index
@@ -283,12 +285,12 @@ tictactoe_t is_game_solved(void){
       // Prints out the current game board
       print_tictactoe_game(gameHandler.gamePositions);
 
-      // Checks the vertical, diagonal and horizontal ... to determine if there is a winner
+      // Checks the vertical, diagonal and horizontal elements to determine if there is a winner
       check_diagonal(&gameHandler);
       check_horizontal(&gameHandler);
       check_vertical(&gameHandler);
       
-
+      // Sets the previous entry to the current entry
       prevEntry = tmpCharEntry;
       // Increments the number of turns played so far in the game.
       gameHandler.gameTurnsCount++;
